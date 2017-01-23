@@ -30,7 +30,7 @@ render(
 	<Provider store={store}>
 		<Router history={history}>
 			<Route path="/" component={App}>
-				<IndexRoute component={PhotoGrid}></IndexRoute>
+				<IndexRoute  component={PhotoGrid} />
 				<Route path="/view/:postId" component={Single}></Route>
 			</Route>
 		</Router>

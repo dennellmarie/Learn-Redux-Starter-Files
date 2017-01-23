@@ -16,7 +16,6 @@ var userFeed = new Instafeed({
 });
 userFeed.run();
 
-userFeed.run();
 console.log(userFeed);
 var app = express();
 app.use(cors());
@@ -30,8 +29,6 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(user, done) {
   done(null, user);
 });
-
-
 
 app.use(passport.initialize());
 
@@ -49,6 +46,11 @@ app.get('/', function(req, res){
   console.log('Render Something', userFeed)
 });
 
+app.get('/hello', function(req, res){
+  console.log("Testing hello");
+  res.json({message: "Hello, world!"});
+});
+
 app.get('/auth/instagram',
   passport.authenticate('instagram'));
 
@@ -62,7 +64,6 @@ app.get('/auth/instagram/callback',
 
 
 var port = process.env.PORT || 7770;
-  var server = http.createServer(app);
-  server.listen(port);
-  console.log('Server listening on ', port);
-
+var server = http.createServer(app);
+server.listen(port);
+console.log('Server listening on ', port);
