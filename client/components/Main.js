@@ -26,7 +26,6 @@ export class Main extends React.Component {
 				 
 			    <FontAwesome name="instagram"/>
     		    <button onClick={this.insta_click}>Login</button >
-
 				{React.cloneElement(this.props.children, this.props)}
 			</div>
 		);

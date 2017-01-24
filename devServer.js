@@ -48,7 +48,7 @@ app.get('/auth/instagram/callback', passport.authenticate('instagram', { failure
   res.redirect('/');
 });
 
-app.get('/', function(req, res) {
+app.get('/login', function(req, res) {
     auto({
     	 getZeus: function(callback) {
             request('https://api.instagram.com/v1/users/427729012/media/recent/?access_token=427729012.17ad390.39d0613f9131494baa9bb16a0b44f586', function(err, response, body) {
