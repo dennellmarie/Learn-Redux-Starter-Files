@@ -52,11 +52,25 @@ export const fetch_hello = () => dispatch => {
 
 
 export const fetch_insta = () => dispatch => {
-	return fetch("/api/instagram").then(response => {
-		console.log(response)
-	}).then(data =>
-		console.log(data)
-	).catch(error =>
-		console.log(error)
-	);
+	console.log('testing testing')
+	return fetch('/login', {
+			method: 'GET',
+			headers: {'Accept': 'application/json', 'content-type': 'application/json'}
+		}).then((res) => {
+			if (res.status < 200 || res.status >= 300) {
+				const error = new Error(res.statusText);
+				error.res = res;
+				console.error(error)
+				throw error;
+			}
+			//console.log(res.json(), 'data here!!!!!');
+	return res.json();
+	});
+	// return fetch("/api/instagram").then(response => {
+	// 	console.log(response)
+	// }).then(data =>
+	// 	console.log(data)
+	// ).catch(error =>
+	// 	console.log(error)
+	// );
 }

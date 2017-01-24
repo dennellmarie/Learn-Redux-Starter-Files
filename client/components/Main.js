@@ -24,9 +24,7 @@ export class Main extends React.Component {
 					<Link to="/">Petstagram</Link>
 				</h1>
 				 
-			    <FontAwesome
-     			 name="instagram"
-    			/>
+			    <FontAwesome name="instagram"/>
     		    <button onClick={this.insta_click}>Login</button >
 
 				{React.cloneElement(this.props.children, this.props)}
