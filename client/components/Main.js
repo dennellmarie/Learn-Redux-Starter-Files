@@ -1,26 +1,39 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import { Link } from 'react-router';
-var Instafeed = require("instafeed.js");
+import FontAwesome from 'react-fontawesome';
+import InstagramLogin from 'react-instagram-login';
+import * as actions from '../actions/actionCreators';
+import store from '../store';
 
-var feed = new Instafeed({
-      get: 'user',
-      userId: 4357624, // Ex: 1374300081
-      accessToken: '4357624.d09a4fd.11ab31efa3fd428eb1bb19fab22a5a40'
-    });
-    feed.run();
+export class Main extends React.Component {
+	constructor(props) {
+        super(props);
+        this.insta_click = this.insta_click.bind();
+    }
 
-const Main = React.createClass({
+    insta_click() {
+        store.dispatch(actions.fetch_insta());
+    }
+
+
 	render() {
-		console.log('feed:::', feed);
 		return (
 			<div>
 				<h1>
 					<Link to="/">Petstagram</Link>
 				</h1>
+				 
+			    <FontAwesome
+     			 name="instagram"
+    			/>
+    		    <button onClick={this.insta_click}>Login</button >
+
 				{React.cloneElement(this.props.children, this.props)}
 			</div>
-		)
+		);
 	}
-});
+}
 
-export default Main;
+
+export default connect()(Main);

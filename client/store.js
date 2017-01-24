@@ -37,6 +37,7 @@ if(module.hot) {
 };
 
 store.dispatch(actions.fetch_hello());
+
 export default store;
 
 //export default createStore(reducer, applyMiddleware(thunk));

@@ -11,14 +11,8 @@ var passport = require('passport');
 var bodyParser = require('body-parser');
 var http = require('http');
 var cors = require('cors');
-var InstagramStrategy = require('passport-instagram').Strategy;
-var Instafeed = require("instafeed.js");
-var userFeed = new Instafeed({
-  get: 'user',
-  userId: '4357624',
-  accessToken: '4357624.d09a4fd.11ab31efa3fd428eb1bb19fab22a5a40'
-});
-userFeed.run();
+const passportConfig = require('./passport');
+const apiController = require('./api');
 
 var app = express();
 var compiler = webpack(config);
@@ -33,43 +27,23 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 app.use(require('webpack-hot-middleware')(compiler));
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.get('/hello', function(req, res){
   console.log("Testing hello");
   res.json({message: "Hello, world!"});
 });
 
 
+app.get('/api/instagram', apiController.getInstagram);
 
-passport.serializeUser(function(user, done) {
-  done(null, user)
+
+app.get('/auth/instagram', passport.authenticate('instagram'));
+app.get('/auth/instagram/callback', passport.authenticate('instagram', { failureRedirect: '/' }), (req, res) => {
+  res.redirect('/');
 });
 
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
-
-app.use(passport.initialize());
-
-passport.use(new InstagramStrategy({
-    clientID: INSTAGRAM_CLIENT_ID,
-    clientSecret: INSTAGRAM_CLIENT_SECRET,
-    callbackURL: "http://localhost:7770/auth/instagram/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    console.log(profile);
-  }
-));
-
-app.get('/auth/instagram',
-  passport.authenticate('instagram'));
-
-app.get('/auth/instagram/callback', 
-  passport.authenticate('instagram', { failureRedirect: '/' }),
-  function(req, res) {
-    console.log('Success...')
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  });
 
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));

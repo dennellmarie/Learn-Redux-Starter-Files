@@ -48,3 +48,15 @@ export const fetch_hello = () => dispatch => {
 		dispatch(report_failure("fetch_hello", error))
 	);
 }
+
+
+
+export const fetch_insta = () => dispatch => {
+	return fetch("/api/instagram").then(response => {
+		console.log(response)
+	}).then(data =>
+		console.log(data)
+	).catch(error =>
+		console.log(error)
+	);
+}
