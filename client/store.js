@@ -36,7 +36,7 @@ if(module.hot) {
 	});
 };
 
-store.dispatch(actions.fetch_hello());
+// store.dispatch(actions.fetch_hello());
 
 export default store;
 

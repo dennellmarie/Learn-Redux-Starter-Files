@@ -32,15 +32,7 @@ app.use(require('webpack-hot-middleware')(compiler));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/login', function(req, res) {
-	request('https://api.instagram.com/v1/users/4357624/media/recent/?access_token=4357624.d09a4fd.11ab31efa3fd428eb1bb19fab22a5a40', function(err, response, body) {
-		if (!err && response.statusCode == 200) {
-			res.send(body);
-		} 
-	})
-})
-
-app.get('/api/instagram', apiController.getInstagram);
+//app.get('/api/instagram', apiController.getInstagram);
 
 app.get('/auth/instagram', passport.authenticate('instagram'));
 
@@ -54,7 +46,6 @@ app.get('/login', function(req, res) {
             request('https://api.instagram.com/v1/users/427729012/media/recent/?access_token=427729012.17ad390.39d0613f9131494baa9bb16a0b44f586', function(err, response, body) {
                 callback(err,body)
 	        })
-	     
 	    },
         getDennell: function(callback) {
             request('https://api.instagram.com/v1/users/4357624/media/recent/?access_token=4357624.d09a4fd.11ab31efa3fd428eb1bb19fab22a5a40', function(err, response, body) {
@@ -67,13 +58,13 @@ app.get('/login', function(req, res) {
     })
 });
 
-app.get('/login', function(req, res) {
-    request('https://api.instagram.com/v1/users/4357624/media/recent/?access_token=4357624.d09a4fd.11ab31efa3fd428eb1bb19fab22a5a40', function(err, response, body) {
-        if (!err && response.statusCode == 200) {
-            res.send(body);
-        }
-    })
-});
+// app.get('/login', function(req, res) {
+//     request('https://api.instagram.com/v1/users/4357624/media/recent/?access_token=4357624.d09a4fd.11ab31efa3fd428eb1bb19fab22a5a40', function(err, response, body) {
+//         if (!err && response.statusCode == 200) {
+//             res.send(body);
+//         }
+//     })
+// });
 
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'));

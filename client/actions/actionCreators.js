@@ -38,39 +38,61 @@ const report_failure = (what, error) => ({
 	what, error
 })
 
-export const fetch_hello = () => dispatch => {
-	return fetch("/hello").then(response => {
-		if (!response.ok) throw(new Error(response.statusText));
-		return response.json();
-	}).then(data =>
-		dispatch(fetch_hello_success(data.message))
-	).catch(error =>
-		dispatch(report_failure("fetch_hello", error))
-	);
+// export const fetch_insta = () => dispatch => {
+// 	console.log('testing testing')
+// 	return fetch('/login', {
+			
+// 		}).then((res) => {
+// 			if (res.status < 200 || res.status >= 300) {
+// 				const error = new Error(res.statusText);
+// 				error.res = res;
+// 				console.error(error)
+// 				throw error;
+// 		}
+// 	return res.json();
+// 	}).then(data => {
+// 		// variables let dennell = json
+// 		// dennell.data[]
+// 		var dennellData = JSON.parse(data.getDennell)
+// 		var zeusData = JSON.parse(data.getZeus)
+// 		console.log("ZeusData dot data", zeusData.data)
+// 		// var newArray = dennellData.data.map(pic, index) => {
+
+// 		// }
+// 		dispatch(newArray(zeusData.data)) // this is an array of obj imgs
+
+// 		// console.log(JSON.parse(data.getZeus))
+// 	}).catch(error =>
+// 		console.log(error)
+// 	);
+// }
+
+const fetchData = url => {
+	return fetch(url, {
+		method: 'GET',
+		headers: {'Accept': 'application/json', 'Content-Type': 'application/json'}
+	}).then(res => res.json());
 }
 
-
-
-export const fetch_insta = () => dispatch => {
-	console.log('testing testing')
-	return fetch('/login', {
-			method: 'GET',
-			headers: {'Accept': 'application/json', 'content-type': 'application/json'}
-		}).then((res) => {
-			if (res.status < 200 || res.status >= 300) {
-				const error = new Error(res.statusText);
-				error.res = res;
-				console.error(error)
-				throw error;
-			}
-			//console.log(res.json(), 'data here!!!!!');
-	return res.json();
-	});
-	// return fetch("/api/instagram").then(response => {
-	// 	console.log(response)
-	// }).then(data =>
-	// 	console.log(data)
-	// ).catch(error =>
-	// 	console.log(error)
-	// );
+export const fetch_insta = () => {
+	return dispatch => {
+		fetchData('/login').then(data => {
+			let jData = JSON.parse(data.getZeus)
+			console.log(JSON.parse(data.getZeus))
+			dispatch(newArray(getUsefulData(jData.data)))
+		})
+		return dispatch({type: 'fetchPhoto'})
+	}
 }
+
+const getUsefulData = arr => {
+	return arr.reduce((a, item) => {
+		a.push({title: item.caption.text, image: item.images.standard_resolution.url})
+		return a;
+	}, [])
+}
+
+const newArray = data => ({
+	type: 'NEW_ARRAY',
+	data
+})
