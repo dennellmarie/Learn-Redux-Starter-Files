@@ -24,7 +24,7 @@ const Photo = React.createClass({
 				<figcaption>
 					<p>{image.title}</p>
 					<div className="control-buttons">
-						<button onClick={this.props.increment.bind(null, i)} className="likes">&hearts;</button>
+						<button onClick={this.props.increment.bind(null, i)} className="likes">&hearts; </button>
 						<Link className="button" to={`/view/`}>
 							<span className="comment-count">
 								<span className="speech-bubble"></span>
